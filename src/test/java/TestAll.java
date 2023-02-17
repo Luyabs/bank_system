@@ -4,12 +4,10 @@ import org.junit.Test;
 import server.Server;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
-public class TestSearchTransferRecords {
+public class TestAll {
     @Test
     public void testTransfer() throws IOException, InterruptedException {
         serverStart();
@@ -40,7 +38,7 @@ public class TestSearchTransferRecords {
         System.out.println(records4);
     }
 
-    private void serverStart() throws IOException, InterruptedException {
+    private void serverStart() throws InterruptedException {
         new Thread(()->{
             try {
                 Server Server = new Server(12345);
