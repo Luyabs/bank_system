@@ -1,7 +1,6 @@
 package ui;
 
 import client.Client;
-
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -59,7 +58,15 @@ public class Login extends JDialog {
             if (client == null || !client.isConnected())    // 当未连接服务端时 进行连接
                 client = new Client("localhost", 6789);
             if (client.login(Integer.parseInt(cardId.getText()), String.valueOf(cardPassword.getPassword())))
+            {
                 loginResult.setText("用户登陆成功");
+                Main dialog = new Main(Integer.parseInt(cardId.getText()));
+                SetPosition.setFrameCenter(dialog);
+                dialog.setSize(400,250);
+                dialog.pack();
+                dialog.setVisible(true);
+                dialog.setAlwaysOnTop(true);
+            }
             else if (client.loginAdmin(Integer.parseInt(cardId.getText()), String.valueOf(cardPassword.getPassword())))
                 loginResult.setText("管理员登陆成功");
             else
@@ -75,12 +82,13 @@ public class Login extends JDialog {
     }
 
     private void onCancel() {
-        // 必要时在此处添加您的代码
+        //关闭当前界面
         dispose();
     }
 
     public static void main(String[] args) throws IOException {
         Login dialog = new Login();
+        SetPosition.setFrameCenter(dialog);
         dialog.pack();
         dialog.setVisible(true);
         dialog.setAlwaysOnTop(true);
