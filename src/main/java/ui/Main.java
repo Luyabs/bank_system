@@ -30,7 +30,10 @@ public class Main extends JDialog {
     private JButton buttonCancel;
 
 
-    public Main(int id) {
+    public Main(int id, Client client) throws IOException {
+        this.id = id;
+        this.client = client;
+
         setContentPane(root);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -79,8 +82,13 @@ public class Main extends JDialog {
      * 响应“查询余额”按钮
      * 点击即打开查询余额页面
     */
-    private void onInquiry(){
-        double recentDeposit = 999 ;
+    private void onInquiry() {
+        double recentDeposit = 0;
+        try {
+            recentDeposit = client.getDetailedInfo(id).getMoney();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         ShowDeposit dialog = new ShowDeposit(recentDeposit);
         dialog.setSize(400,250);
         dialog.pack();
