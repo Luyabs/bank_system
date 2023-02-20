@@ -165,6 +165,8 @@ public class Server implements ServerResponse {
                 cardMapper.setMoney(id0, -money);
                 return true;
             }
+        } else if (cardMapper.selectDetailedById(id1) == null) {    // 转账对方不存在
+            return false;
         } else {
             //转账
             cardMoney = cardMapper.selectDetailedById(id0).getMoney();
