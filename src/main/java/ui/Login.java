@@ -60,7 +60,7 @@ public class Login extends JDialog {
             if (client.login(Integer.parseInt(cardId.getText()), String.valueOf(cardPassword.getPassword())))
             {
                 loginResult.setText("用户登陆成功");
-                Main dialog = new Main(Integer.parseInt(cardId.getText()));
+                Main dialog = new Main(Integer.parseInt(cardId.getText()), client);
                 SetPosition.setFrameCenter(dialog);
                 dialog.setSize(400,250);
                 dialog.pack();
