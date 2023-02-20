@@ -141,6 +141,7 @@ public class Server implements ServerResponse {
      * 转账/存款/取款
      * 判断是否满足条件 + 向数据库写入记录
      * 注意存款时 资金流入方id == 0    取款时 资金流出方id == 0
+     *
      * @param cards cards.get(0).getId()资金流出方; cards.get(1).getId()资金流入方; card.get(0或1).getMoney()流动金额
      * @return 是否成功
      */
@@ -153,26 +154,33 @@ public class Server implements ServerResponse {
         int id1 = cardList.get(1).getId();
         //交易资金
         double money = cardList.get(0).getMoney();
-        double cardMoney;
+        if (money < 0)
+            return false;
         if (id0 == 0) {
             //存款
+            if(!cardMapper.idCheck(id1))
+                return false;
             cardMapper.setMoney(id1, money);
-            return true;
+            return recordMapper.addRecord(0, id1, money, 1);
         } else if (id1 == 0) {
             //取款
-            cardMoney = cardMapper.selectDetailedById(id0).getMoney();
-            if (cardMoney >= money) {
+            if(!cardMapper.idCheck(id0))
+                return false;
+            if (cardMapper.moneyCheck(id0, money)) {
                 cardMapper.setMoney(id0, -money);
-                return true;
+                return recordMapper.addRecord(id0, 0, money, 2);
             }
         } else {
             //转账
-            cardMoney = cardMapper.selectDetailedById(id0).getMoney();
-            System.out.println(id0+" "+id1+" "+money+" "+cardMoney);
-            if (cardMoney >= money) {
+            if(!cardMapper.idCheck(id0))
+                return false;
+            if(!cardMapper.idCheck(id1))
+                return false;
+            System.out.println(id0 + " " + id1 + " " + money);
+            if (cardMapper.moneyCheck(id0, money)) {
                 cardMapper.setMoney(id0, -money);
                 cardMapper.setMoney(id1, money);
-                return true;
+                return recordMapper.addRecord(id0, id1, money, 0);
             }
         }
         return false;

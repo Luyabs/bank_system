@@ -13,14 +13,20 @@ public class TestAll {
         serverStart();
         Client client = getClient();
         boolean flag1 = client.transfer(12345678, 13128310, 100);
-        boolean flag2 = client.transfer(123, 13128310, 100);
-        boolean flag3 = client.transfer(123, 456, 100);
-        boolean flag4 = client.transfer(12345678, 13128310, -100);
+        boolean flag2 = client.transfer(0, 41239812, 100);
+        boolean flag3 = client.transfer(21839122,0,100);
+        boolean flag4 = client.transfer(123, 12345678, 100);
+        boolean flag5 = client.transfer(123, 456, 100);
+        boolean flag6 = client.transfer(12345678, 13128310, -100);
+        boolean flag7 = client.transfer(12345678, 13128310, 100000);
 
         System.out.println(flag1);
         System.out.println(flag2);
         System.out.println(flag3);
         System.out.println(flag4);
+        System.out.println(flag5);
+        System.out.println(flag6);
+        System.out.println(flag7);
     }
 
     @Test

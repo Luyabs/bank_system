@@ -88,4 +88,25 @@ public class RecordMapper {
         }
         return records;
     }
+
+    public boolean addRecord(int fromid, int toid, double money, int type) {
+        Date time = new Date(System.currentTimeMillis());
+        int i=0;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "insert into record (from_id,to_id,money,type,time) values(?,?,?,?,?)");
+            preparedStatement.setInt(1, fromid);
+            preparedStatement.setInt(2, toid);
+            preparedStatement.setDouble(3, money);
+            preparedStatement.setInt(4, type);
+            preparedStatement.setDate(5,time);
+            i= preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("!!!!!!配置文件没配对，连不到DB，去SqlConfig.properties做修改");
+        }
+        return i>0;
+    }
 }

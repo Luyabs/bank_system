@@ -79,6 +79,28 @@ public class CardMapper {
     }
 
     /**
+     * 判断id是否存在
+     *
+     * @param id 卡号
+     * @return 是否满足
+     */
+    public boolean idCheck(int id) {
+        try {
+            PreparedStatement idCheck = connection.prepareStatement(
+                    "select * from card where id = ?"
+            );
+            idCheck.setInt(1, id);
+            ResultSet resultSet = idCheck.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
      * 判断资金流出方资金是否满足要求
      *
      * @param id 资金流出方； money 流出金额
@@ -92,7 +114,8 @@ public class CardMapper {
             );
             moneyCheck.setInt(1, id);
             ResultSet checkResult = moneyCheck.executeQuery();
-            double cardMoney=checkResult.getDouble("money");
+            checkResult.next();
+            double cardMoney = checkResult.getDouble("money");
             if (cardMoney >= money)
                 return true;
             else
@@ -105,6 +128,7 @@ public class CardMapper {
         }
         return false;
     }
+
 
     /**
      * 修改卡中资金
