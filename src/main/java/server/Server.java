@@ -170,6 +170,8 @@ public class Server implements ServerResponse {
                 cardMapper.setMoney(id0, -money);
                 return recordMapper.addRecord(id0, 0, money, 2);
             }
+        } else if (cardMapper.selectDetailedById(id1) == null) {    // 转账对方不存在
+            return false;
         } else {
             //转账
             if(!cardMapper.idCheck(id0))

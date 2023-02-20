@@ -13,7 +13,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <grid id="8028f" layout-manager="GridLayoutManager" row-count="5" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="8028f" layout-manager="GridLayoutManager" row-count="6" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -31,7 +31,7 @@
           </component>
           <component id="83200" class="javax.swing.JButton" binding="Button_exit">
             <constraints>
-              <grid row="4" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="退出"/>
@@ -47,7 +47,7 @@
           </component>
           <component id="dfbbe" class="javax.swing.JTextField" binding="TextField">
             <constraints>
-              <grid row="0" column="0" row-span="5" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+              <grid row="0" column="0" row-span="6" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
@@ -63,6 +63,14 @@
             </constraints>
             <properties>
               <text value="取款"/>
+            </properties>
+          </component>
+          <component id="63bd8" class="javax.swing.JButton" binding="button_transfer">
+            <constraints>
+              <grid row="4" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="转账"/>
             </properties>
           </component>
         </children>

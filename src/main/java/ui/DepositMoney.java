@@ -38,7 +38,7 @@ public class DepositMoney extends JDialog {
             INT_money = 0;
             String STR_money = textField1.getText();
             //判断输入数据为非负整数;
-            Matcher M_money = Pattern.compile("^[+-]?[0-9]+$").matcher(STR_money);
+            Matcher M_money = Pattern.compile("^[1-9]\\d*$").matcher(STR_money);
             if (M_money.find()) {
                 INT_money = Integer.parseInt(STR_money);
                 JOptionPane.showMessageDialog(null, "输入成功！");
@@ -51,11 +51,10 @@ public class DepositMoney extends JDialog {
     /**返回新增的存款数目
      *
      */
-        Integer returnAddMoney () {
+        double returnAddMoney () {
             return INT_money;
         }
         public static void main (String[]args){
-
             DepositMoney dialog = new DepositMoney();
             SetPosition.setFrameCenter(dialog);
             dialog.pack();

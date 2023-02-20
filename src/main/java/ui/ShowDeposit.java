@@ -10,7 +10,6 @@ import java.awt.event.*;
 import java.io.IOException;
 
 public class ShowDeposit extends JDialog {
-    private Client client;  // client对象
     private JPanel panel1;
     private JButton button_OK;
     private JTextField textField1;
