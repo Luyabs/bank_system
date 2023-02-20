@@ -25,12 +25,16 @@ public class Main extends JDialog {
     private JButton Button_exit;
     private JButton Button_withdrawal;
     private JTextField TextField;
+    private JButton button_transfer;
     private JTextField depositResult;
     private JButton buttonOK;
     private JButton buttonCancel;
 
 
-    public Main(int id) {
+    public Main(int id, Client client) throws IOException {
+        this.id = id;
+        this.client = client;
+
         setContentPane(root);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -74,14 +78,26 @@ public class Main extends JDialog {
                 onCancel();
             }
         });
+        button_transfer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onTransfer();
+            }
+        });
     }
     /**
      * 响应“查询余额”按钮
      * 点击即打开查询余额页面
-    */
-    private void onInquiry(){
-        double recentDeposit = 999 ;
+     */
+    private void onInquiry() {
+        double recentDeposit = 0;
+        try {
+            recentDeposit = client.getDetailedInfo(id).getMoney();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         ShowDeposit dialog = new ShowDeposit(recentDeposit);
+        SetPosition.setFrameCenter(dialog);
         dialog.setSize(400,250);
         dialog.pack();
         dialog.setVisible(true);
@@ -98,6 +114,20 @@ public class Main extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         dialog.setAlwaysOnTop(true);
+        double AddMoney = dialog.returnAddMoney();
+        try {
+            if(client.transfer(0,id,AddMoney)){
+                JOptionPane.showMessageDialog(null, "存款成功！");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "存款失败！");
+            }
+            dialog.dispose();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
     /**
      *响应“取款”按钮
@@ -109,6 +139,18 @@ public class Main extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         dialog.setAlwaysOnTop(true);
+        double deleteMoney = dialog.returnAddMoney();
+        try {
+            if(client.transfer(id,0,deleteMoney)){
+                JOptionPane.showMessageDialog(null, "取款成功！");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "取款失败！");
+            }
+            dialog.dispose();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * 响应关闭
@@ -119,8 +161,31 @@ public class Main extends JDialog {
         dispose();
     }
 
+    /**
+     *
+     */
+    private void onTransfer(){
+        TransferMoney dialog = new TransferMoney();
+        SetPosition.setFrameCenter(dialog);
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setAlwaysOnTop(true);
+        Integer toid = dialog.ReturnToid();
+        Integer tomoney =dialog.Returntomoney();
+        try {
+            if(client.transfer(id,toid,tomoney)){
+                JOptionPane.showMessageDialog(null, "转账成功！");
+            }
+                else{
+                JOptionPane.showMessageDialog(null, "转账失败！");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
 }
+

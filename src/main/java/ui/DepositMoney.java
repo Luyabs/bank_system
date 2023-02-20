@@ -51,11 +51,10 @@ public class DepositMoney extends JDialog {
     /**返回新增的存款数目
      *
      */
-        Integer returnAddMoney () {
+        double returnAddMoney () {
             return INT_money;
         }
         public static void main (String[]args){
-
             DepositMoney dialog = new DepositMoney();
             SetPosition.setFrameCenter(dialog);
             dialog.pack();
