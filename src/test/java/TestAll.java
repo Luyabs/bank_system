@@ -44,6 +44,41 @@ public class TestAll {
         System.out.println(records4);
     }
 
+    @Test
+    public void testRegister()throws IOException,InterruptedException{
+        serverStart();
+        Client client=getClient();
+        boolean flag1=client.register(10086,"123","工商银行",310105,"蔡徐坤");
+        boolean flag2=client.register(12345678,"123","银行",11111,"好人");
+
+        System.out.println(flag1);
+        System.out.println(flag2);
+    }
+
+    @Test
+    public void testUpdatePassword()throws IOException,InterruptedException{
+        serverStart();
+        Client client=getClient();
+        boolean flag1=client.updatePassword(10086,"35esa");
+        boolean flag2=client.updatePassword(1,"password");
+
+        System.out.println(flag1);
+        System.out.println(flag2);
+    }
+
+    @Test
+    public void testDeleteCard()throws IOException,InterruptedException{
+        serverStart();
+        Client client=getClient();
+        boolean flag1=client.deleteCard(10086);
+        boolean flag2=client.deleteCard(1234);
+        boolean flag3=client.deleteCard(12345678);
+
+        System.out.println(flag1);
+        System.out.println(flag2);
+        System.out.println(flag3);
+    }
+
     private void serverStart() throws InterruptedException {
         new Thread(()->{
             try {
