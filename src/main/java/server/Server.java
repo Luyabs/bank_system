@@ -251,9 +251,8 @@ public class Server implements ServerResponse {
      */
     @Override
     public List<Card> getCardList() {
-        //TODO: 还没有实现
-        //TODO: 还没有实现
-        return null;
+        List<Card> list=cardMapper.selectAllCard();
+        return list;
     }
 
     /**
@@ -265,8 +264,7 @@ public class Server implements ServerResponse {
     @Override
     public boolean updateBank(String data) {
         Card card = ToEntity.toCard(data);
-        //TODO: 还没有实现
-        return false;
+        return cardMapper.setBank(card.getId(), card.getBank());
     }
 
     /**
@@ -279,8 +277,7 @@ public class Server implements ServerResponse {
     @Override
     public boolean updateStatus(String data) {
         Card card = ToEntity.toCard(data);
-        //TODO: 还没有实现
-        return false;
+        return cardMapper.setStatus(card.getId(), card.getStatus());
     }
 
 
