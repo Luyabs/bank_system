@@ -34,6 +34,7 @@ public class Server implements ServerResponse {
 
     /**
      * 构造方法
+     *
      * @param port 服务端自身的端口号
      */
     public Server(int port) throws IOException {
@@ -84,8 +85,7 @@ public class Server implements ServerResponse {
                     default -> System.out.println("未知操作码");
                 }
             }
-        }
-        catch (SocketException ex) {
+        } catch (SocketException ex) {
             System.out.println("当前连接的客户端已断开");
         }
     }
@@ -93,6 +93,7 @@ public class Server implements ServerResponse {
     /**
      * 检查登录[普通用户]
      * 读取登录信息 -> 通过mapper层方法 访问数据库 -> 返回登录结果
+     *
      * @param data 有效内容为card.id card.password
      * @return 是否登陆成功
      */
@@ -110,6 +111,7 @@ public class Server implements ServerResponse {
     /**
      * 检查登录[管理员]
      * 读取登录信息 -> 通过mapper层方法 访问数据库 -> 返回登录结果
+     *
      * @param data 有效内容为admin.id admin.password
      * @return 是否登陆成功
      */
@@ -127,6 +129,7 @@ public class Server implements ServerResponse {
     /**
      * 通过卡号id 查寻卡的详细信息
      * 读取登录信息 -> 通过mapper层方法 访问数据库 -> 返回详细信息
+     *
      * @param data 有效内容为card.id
      * @return 完整卡的信息
      */
@@ -158,13 +161,13 @@ public class Server implements ServerResponse {
             return false;
         if (id0 == 0) {
             //存款
-            if(!cardMapper.idCheck(id1))
+            if (!cardMapper.idCheck(id1))
                 return false;
             cardMapper.setMoney(id1, money);
             return recordMapper.addRecord(0, id1, money, 1);
         } else if (id1 == 0) {
             //取款
-            if(!cardMapper.idCheck(id0))
+            if (!cardMapper.idCheck(id0))
                 return false;
             if (cardMapper.moneyCheck(id0, money)) {
                 cardMapper.setMoney(id0, -money);
@@ -172,9 +175,9 @@ public class Server implements ServerResponse {
             }
         } else {
             //转账
-            if(!cardMapper.idCheck(id0))
+            if (!cardMapper.idCheck(id0))
                 return false;
-            if(!cardMapper.idCheck(id1))
+            if (!cardMapper.idCheck(id1))
                 return false;
             System.out.println(id0 + " " + id1 + " " + money);
             if (cardMapper.moneyCheck(id0, money)) {
@@ -188,17 +191,18 @@ public class Server implements ServerResponse {
 
     /**
      * 查询有关该用户的收支记录
+     *
      * @param card 有效内容为card.id
      * @return 包含该id的所有转账记录
      */
     @Override
     public List<Record> searchTransferRecords(String card) {
         Card _card = ToEntity.toCard(card);   //先转化为实体类
-        int id=_card.getId();
-        List<Record> records1=recordMapper.selectRecordsByToId(id);    //查record表
-        List<Record> records2=recordMapper.selectRecordsByFromId(id);
+        int id = _card.getId();
+        List<Record> records1 = recordMapper.selectRecordsByToId(id);    //查record表
+        List<Record> records2 = recordMapper.selectRecordsByFromId(id);
 
-        List<Record> records=new ArrayList<>();
+        List<Record> records = new ArrayList<>();
         records.addAll(records1);
         records.addAll(records2);
 
@@ -208,45 +212,64 @@ public class Server implements ServerResponse {
     /**
      * 通过card的完整信息进行注册
      * 需要判断卡号是否存在于数据库中
+     *
      * @param data 含有完整信息(所有属性)的card
      * @return 注册是否成功
      */
     @Override
     public boolean register(String data) {
         Card card = ToEntity.toCard(data);
-        // TODO: 还没有实现
-        return false;
+        int id = card.getId();
+        String password = card.getPassword();
+        String bank = card.getBank();
+        long uid = card.getUid();
+        String user_inform = card.getUserInform();
+        if (cardMapper.idCheck(id))
+            return false;
+        return cardMapper.addCard(id, password, bank, uid, user_inform, 1);
     }
 
     /**
      * 将卡号=card.id的卡重新设置密码为password
      * 需要判断卡号是否存在于数据库中
+     *
      * @param data 有效数据 card.id card.password
      * @return 是否更新成功
      */
     @Override
     public boolean updatePassword(String data) {
         Card card = ToEntity.toCard(data);
-        //TODO: 还没有实现
-        return false;
+        int id = card.getId();
+        String password = card.getPassword();
+
+        if (!cardMapper.idCheck(id))
+            return false;
+        return cardMapper.setPassword(id,password);
     }
 
     /**
      * 将卡号=card.id的卡销毁
      * 需判断卡号是否存在于数据库中
      * 需判断卡号余额money是否为0
+     *
      * @param data 有效数据仅为 card.id
      * @return 是否销毁成功
      */
     @Override
     public boolean deleteCard(String data) {
         Card card = ToEntity.toCard(data);
-        //TODO: 还没有实现
-        return false;
+        int id=card.getId();
+
+        if(!cardMapper.idCheck(id))
+            return false;
+        if(cardMapper.selectDetailedById(id).getMoney()!=0)
+            return false;
+        return cardMapper.deleteCard(id);
     }
 
     /**
      * 获取card表中所有数据
+     *
      * @return List<Card>
      */
     @Override
@@ -258,6 +281,7 @@ public class Server implements ServerResponse {
     /**
      * 将卡号=card.id的卡更新所属银行
      * 需判断卡号是否存在于数据库中
+     *
      * @param data 有效数据 card.id card.bank
      * @return 是否更新成功
      */
@@ -271,6 +295,7 @@ public class Server implements ServerResponse {
      * 将卡号=card.id的卡更新状态
      * 需判断卡号是否存在于数据库中
      * 注意status = 1 有效 = 0冻结
+     *
      * @param data 有效数据 card.id card.status
      * @return 是否更新成功
      */
