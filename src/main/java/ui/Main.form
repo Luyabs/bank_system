@@ -13,53 +13,51 @@
     </properties>
     <border type="none"/>
     <children>
-      <grid id="8028f" layout-manager="GridLayoutManager" row-count="6" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="8028f" layout-manager="GridLayoutManager" row-count="7" column-count="9" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="500" height="300"/>
+            <maximum-size width="500" height="500"/>
+          </grid>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
           <component id="c342a" class="javax.swing.JButton" binding="Button_inquiry">
             <constraints>
-              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="查询余额"/>
+              <text value="查询（）"/>
             </properties>
           </component>
           <component id="83200" class="javax.swing.JButton" binding="Button_exit">
             <constraints>
-              <grid row="5" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="6" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <maximum-size width="500" height="500"/>
+              </grid>
             </constraints>
             <properties>
               <text value="退出"/>
             </properties>
           </component>
-          <component id="96b26" class="javax.swing.JButton" binding="Button_deposit">
-            <constraints>
-              <grid row="1" column="7" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="存款"/>
-            </properties>
-          </component>
           <component id="dfbbe" class="javax.swing.JTextField" binding="TextField">
             <constraints>
-              <grid row="0" column="0" row-span="6" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+              <grid row="0" column="1" row-span="7" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
             <properties>
+              <editable value="false"/>
               <enabled value="true"/>
               <horizontalAlignment value="0"/>
-              <text value="欢迎使用银行系统，请输入你的选择："/>
+              <text value=""/>
             </properties>
           </component>
           <component id="b0d76" class="javax.swing.JButton" binding="Button_withdrawal">
             <constraints>
-              <grid row="3" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="取款"/>
@@ -67,10 +65,26 @@
           </component>
           <component id="63bd8" class="javax.swing.JButton" binding="button_transfer">
             <constraints>
-              <grid row="4" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="转账"/>
+            </properties>
+          </component>
+          <component id="96b26" class="javax.swing.JButton" binding="Button_deposit">
+            <constraints>
+              <grid row="1" column="8" row-span="3" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="存款"/>
+            </properties>
+          </component>
+          <component id="76131" class="javax.swing.JButton" binding="Button_Account">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="账户信息"/>
             </properties>
           </component>
         </children>
