@@ -207,12 +207,7 @@ public class Server implements ServerResponse {
         List<Record> records = new ArrayList<>();
         records.addAll(records1);
         records.addAll(records2);
-        Collections.sort(records, new Comparator<Record>() {
-            @Override
-            public int compare(Record o1, Record o2) {
-                return -o1.getTime().compareTo(o2.getTime());
-            }
-        });
+        Collections.sort(records, (o1, o2) -> o2.getId() - o1.getId());
         return records;
     }
 
