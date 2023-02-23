@@ -275,6 +275,9 @@ public class CardMapper {
      */
     public boolean setStatus(int id, int Status) {
         int i=0;
+        if(Status<0||Status>1) {
+            return false;
+        }
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "update card set status = ? where id = ?"

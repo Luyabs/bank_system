@@ -15,6 +15,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -205,7 +207,12 @@ public class Server implements ServerResponse {
         List<Record> records = new ArrayList<>();
         records.addAll(records1);
         records.addAll(records2);
-
+        Collections.sort(records, new Comparator<Record>() {
+            @Override
+            public int compare(Record o1, Record o2) {
+                return -o1.getTime().compareTo(o2.getTime());
+            }
+        });
         return records;
     }
 
