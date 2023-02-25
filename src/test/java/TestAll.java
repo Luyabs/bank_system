@@ -1,4 +1,5 @@
 import client.Client;
+import entity.Card;
 import entity.Record;
 import org.junit.Test;
 import server.Server;
@@ -42,6 +43,77 @@ public class TestAll {
         System.out.println(records2);
         System.out.println(records3);
         System.out.println(records4);
+    }
+
+    @Test
+    public void testRegister()throws IOException,InterruptedException{
+        serverStart();
+        Client client=getClient();
+        boolean flag1=client.register(10086,"123","工商银行",310105,"蔡徐坤");
+        boolean flag2=client.register(12345678,"123","银行",11111,"好人");
+
+        System.out.println(flag1);
+        System.out.println(flag2);
+    }
+
+    @Test
+    public void testUpdatePassword()throws IOException,InterruptedException{
+        serverStart();
+        Client client=getClient();
+        boolean flag1=client.updatePassword(10086,"35esa");
+        boolean flag2=client.updatePassword(1,"password");
+
+        System.out.println(flag1);
+        System.out.println(flag2);
+    }
+
+    @Test
+    public void testDeleteCard()throws IOException,InterruptedException{
+        serverStart();
+        Client client=getClient();
+        boolean flag1=client.deleteCard(10086);
+        boolean flag2=client.deleteCard(1234);
+        boolean flag3=client.deleteCard(12345678);
+
+        System.out.println(flag1);
+        System.out.println(flag2);
+        System.out.println(flag3);
+    }
+
+    @Test
+    public void testUpdateBank() throws IOException, InterruptedException {
+        serverStart();
+        Client client = getClient();
+        boolean flag1 = client.updateBank(10086, "天地银行");
+        boolean flag2 = client.updateBank(1234, "");
+        boolean flag3 = client.updateBank(41239812, "很行");
+
+        System.out.println(flag1);
+        System.out.println(flag2);
+        System.out.println(flag3);
+    }
+
+    @Test
+    public void testUpdateStatus() throws IOException, InterruptedException {
+        serverStart();
+        Client client = getClient();
+        boolean flag1 = client.updateStatus(12345678, 2);
+        boolean flag2 = client.updateStatus(21839122, -3);
+        boolean flag3 = client.updateStatus(41239812, 4);
+        boolean flag4 = client.updateStatus(-123, 1);
+
+        System.out.println(flag1);
+        System.out.println(flag2);
+        System.out.println(flag3);
+        System.out.println(flag4);
+    }
+
+    @Test
+    public void testGetCardList() throws IOException, InterruptedException {
+        serverStart();
+        Client client = getClient();
+        List<Card> cardList = client.getCardList();
+        System.out.println(cardList);
     }
 
     private void serverStart() throws InterruptedException {

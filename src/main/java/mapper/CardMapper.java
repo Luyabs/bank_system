@@ -1,6 +1,8 @@
 package mapper;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import entity.Card;
 import mapper.config.SqlConfig;
@@ -137,14 +139,14 @@ public class CardMapper {
      * @return 是否满足
      */
     public boolean setMoney(int id, double changeMoney) {
-        int i=0;
+        int i = 0;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "update card set money = money + ? where id = ?"
             );
             preparedStatement.setDouble(1, changeMoney);
             preparedStatement.setInt(2, id);
-            i=preparedStatement.executeUpdate();
+            i = preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -152,8 +154,182 @@ public class CardMapper {
             e.printStackTrace();
             System.out.println("!!!!!!配置文件没配对，连不到DB，去SqlConfig.properties做修改");
         }
+        return i > 0;
+    }
+
+    /**
+     * @param id       银行卡号
+     * @param password 密码
+     * @param bank     银行
+     * @param uid      用户id
+     * @param username 用户名
+     * @param status   银行
+     * @return 是否成功添加
+     */
+    public boolean addCard(int id, String password, String bank, long uid, String username, int status) {
+        int i = 0, j = 0;
+        try {
+            PreparedStatement preparedStatement1 = connection.prepareStatement(
+                    "insert into card(id,bank,uid,user_inform,status)" +
+                            "values(?,?,?,?,?)"
+            );
+            preparedStatement1.setInt(1, id);
+            preparedStatement1.setString(2, bank);
+            preparedStatement1.setLong(3, uid);
+            preparedStatement1.setString(4, username);
+            preparedStatement1.setInt(5, status);
+            i = preparedStatement1.executeUpdate();
+
+            PreparedStatement preparedStatement2 = connection.prepareStatement(
+                    "insert into card_password(id,password)" +
+                            "values (?,?)"
+            );
+            preparedStatement2.setInt(1, id);
+            preparedStatement2.setString(2, password);
+            j = preparedStatement2.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return i > 0 && j > 0;
+    }
+
+    /**
+     * @param id       银行卡号
+     * @param password 修改的密码
+     * @return 是否修改成功
+     */
+    public boolean setPassword(int id, String password) {
+        int i = 0;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "update card_password set password=? where id=?"
+            );
+            preparedStatement.setString(1, password);
+            preparedStatement.setInt(2, id);
+            i = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return i > 0;
+    }
+
+    public boolean deleteCard(int id) {
+        int i = 0, j = 0;
+        try {
+            PreparedStatement preparedStatement1 = connection.prepareStatement(
+                    "delete from card where id = ?"
+            );
+            preparedStatement1.setInt(1, id);
+            i = preparedStatement1.executeUpdate();
+
+            PreparedStatement preparedStatement2 = connection.prepareStatement(
+                    "delete from card_password where id=?"
+            );
+            preparedStatement2.setInt(1, id);
+            j = preparedStatement2.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return i > 0 && j > 0;
+    }
+
+
+    /**
+     * 修改卡所属的bank
+     *
+     * @param id 卡号
+     * @param bank 更改的银行
+     * @return 修改是否成功
+     */
+    public boolean setBank(int id, String bank) {
+        int i=0;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "update card set bank = '"+bank+"' where id = ?"
+            );
+            preparedStatement.setInt(1,id);
+            i=preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("!!!!!!配置文件没配对，连不到DB，去SqlConfig.properties做修改");
+        }
         return i>0;
     }
+
+
+    /**
+     *
+     * @param id 卡号
+     * @param Status 新状态
+     * @return 修改是否成功
+     */
+    public boolean setStatus(int id, int Status) {
+        int i=0;
+        if(Status<0||Status>1) {
+            return false;
+        }
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "update card set status = ? where id = ?"
+            );
+            preparedStatement.setInt(1,Status);
+            preparedStatement.setInt(2,id);
+            i=preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("!!!!!!配置文件没配对，连不到DB，去SqlConfig.properties做修改");
+        }
+        return i>0;
+    }
+
+
+    /**
+     * 查询所有card详细信息
+     *
+     * @return List<Card>
+     */
+    public List<Card> selectAllCard() {
+        List<Card> list=new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "select * from card"
+            );
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Card card=new Card();
+                card.setId(rs.getInt("id"));
+                card.setMoney(rs.getDouble("money"));
+                card.setBank(rs.getString("bank"));
+                card.setUid(rs.getLong("uid"));
+                card.setUserInform(rs.getString("user_inform"));
+                card.setStatus(rs.getInt("status"));
+                list.add(card);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("!!!!!!配置文件没配对，连不到DB，去SqlConfig.properties做修改");
+        }
+        return list;
+    }
 }
+
 
 
