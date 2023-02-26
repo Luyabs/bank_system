@@ -65,6 +65,7 @@ public class Inquire1 extends JDialog {
 
     private void onInquiryRecord() {
         ShowRecord2 frame = new ShowRecord2(cardrecord);
+        SetPosition.setFrameCenter(frame);
         frame.pack();
         frame.setVisible(true);
         frame.setAlwaysOnTop(true);

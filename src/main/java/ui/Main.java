@@ -41,8 +41,7 @@ public class Main extends JDialog {
         setContentPane(root);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        TextField.setText("欢迎使用银行系统，\n请输入你的选择:");
-
+        TextField.setText("您好，用户，欢迎使用银行系统，请输入你的选择:");
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -210,19 +209,13 @@ public class Main extends JDialog {
             dialog.pack();
             dialog.setVisible(true);
             dialog.setAlwaysOnTop(true);
-            if(dialog.returnIfLogOut() == true){       //判断是否通过注销程序
-                JOptionPane.showMessageDialog(null, "注销成功！");
-                dispose();
-                /**
-                 *
-                 * 等待deleteCard函数实现
-                 */
-                /*if(deleteCard(id) == true){
+            if(dialog.returnIfLogOut()){       //判断是否通过注销程序
+                if(client.deleteCard(id)){
                     JOptionPane.showMessageDialog(null, "注销成功！");
                     System.exit(0);
                 }
                 else
-                    JOptionPane.showMessageDialog(null, "注销失败！");*/
+                    JOptionPane.showMessageDialog(null, "注销失败！");
             }
             else{
                 String Npassword = dialog.returnNewPassword();
@@ -231,9 +224,6 @@ public class Main extends JDialog {
                         JOptionPane.showMessageDialog(null, "修改密码成功！");
                     else
                         JOptionPane.showMessageDialog(null, "修改密码失败！");
-                else{
-                    JOptionPane.showMessageDialog(null, "新旧密码不能一致！");
-                }
             }
 
         } catch (IOException e) {

@@ -23,7 +23,8 @@ public class Login extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-
+        if (client == null || !client.isConnected())    // 当未连接服务端时 进行连接
+            client = new Client("localhost", 6789);
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onLogin();
@@ -61,8 +62,7 @@ public class Login extends JDialog {
     private void onLogin(){
         //登录
         try {
-            if (client == null || !client.isConnected())    // 当未连接服务端时 进行连接
-                client = new Client("localhost", 6789);
+
             if (client.login(Integer.parseInt(cardId.getText()), String.valueOf(cardPassword.getPassword())))
             {
                 loginResult.setText("用户登陆成功");
@@ -73,8 +73,15 @@ public class Login extends JDialog {
                 dialog.setVisible(true);
                 dialog.setAlwaysOnTop(true);
             }
-            else if (client.loginAdmin(Integer.parseInt(cardId.getText()), String.valueOf(cardPassword.getPassword())))
+            else if (client.loginAdmin(Integer.parseInt(cardId.getText()), String.valueOf(cardPassword.getPassword()))){
                 loginResult.setText("管理员登陆成功");
+                AdminMain dialog = new AdminMain(Integer.parseInt(cardId.getText()), client);
+                SetPosition.setFrameCenter(dialog);
+                dialog.setSize(400,250);
+                dialog.pack();
+                dialog.setVisible(true);
+                dialog.setAlwaysOnTop(true);
+            }
             else
                 loginResult.setText("账号或密码错误");
         } catch (NumberFormatException e) {
@@ -103,13 +110,13 @@ public class Login extends JDialog {
 
     }
     private void onRegister(){
-        Register dialog = new Register();
-        dialog.pack();
-        dialog.setVisible(true);
-        dialog.setAlwaysOnTop(true);
         try {
-            if(client.register(dialog.returnId(),dialog.returnPassword(),dialog.returnBank(),dialog.returnUid(),
-                    dialog.returnUserInform()))
+            Register dialog = new Register();
+            dialog.pack();
+            dialog.setVisible(true);
+            dialog.setAlwaysOnTop(true);
+
+            if(client.register(dialog.returnId(),dialog.returnPassword(),dialog.returnBank(),dialog.returnUid(), dialog.returnUserInform()))
                 JOptionPane.showMessageDialog(null, "注册成功！");
             else
                 JOptionPane.showMessageDialog(null, "注册失败！");

@@ -200,7 +200,7 @@ public class Client implements ClientRequest {
      * @param status 状态
      */
     @Override
-    public boolean updateStatus(int id, int status) throws IOException {
+    public boolean updateStatus(int id,int status) throws IOException {
         Card card = new Card(id);
         card.setStatus(status);
         out.writeUTF("011" + card);

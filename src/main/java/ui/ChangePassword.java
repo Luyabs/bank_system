@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
 
 public class ChangePassword extends JDialog{
     private JPanel panel1;
-    private JTextField passwordField_newagain;
-    private JTextField passwordField_new;
+    private JPasswordField passwordField_newagain;
+    private JPasswordField passwordField_new;
     private JTextField passwordField_old;
     private JButton Button_OK;
     private JButton Button_Cancel;
@@ -42,8 +42,8 @@ public class ChangePassword extends JDialog{
     }
     private void OnOK(){
         oldPasswordInput = passwordField_old.getText();
-        newPassword1 = passwordField_new.getText();
-        newPassword2 = passwordField_newagain.getText();
+        newPassword1 = String.valueOf(passwordField_new.getPassword());
+        newPassword2 = String.valueOf(passwordField_newagain.getPassword());
         if(!oldPasswordInput.equals(oldPasswordCorrect)){   //原密码错误
             JOptionPane.showMessageDialog(null, "原密码错误！");
         }

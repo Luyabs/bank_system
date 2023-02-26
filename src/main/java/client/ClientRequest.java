@@ -31,7 +31,7 @@ public interface ClientRequest {
 
     boolean updateBank(int id, String bank) throws IOException;     //管理员: 更改用户卡所属银行
 
-    boolean updateStatus(int id, int status) throws IOException;    //管理员: 更改用户卡的状态 0:冻结 1:正常
+    boolean updateStatus(int id,int status) throws IOException;    //管理员: 更改用户卡的状态 0:冻结 1:正常
 
     // TODO: 追加其他功能？
 }

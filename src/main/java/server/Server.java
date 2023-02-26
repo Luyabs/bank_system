@@ -69,22 +69,35 @@ public class Server implements ServerResponse {
                 System.out.println("operation: " + operation + "  data: " + data);
 
                 switch (operation) {
-                    case "000" -> end = true;   //客户端登出
-                    case "001" -> out.writeBoolean(checkLogin(data)); //用户登录 - 返回登陆是否成功
-                    case "002" -> out.writeBoolean(checkLoginAdmin(data)); //管理员登录 - 返回登陆是否成功
-                    case "003" -> out.writeUTF(searchDetailedInfo(data)); //用户查询详细信息 - 返回card的详细信息
-                    case "004" -> out.writeBoolean(transfer(data)); //转账/存款/取款 - 返回是否转账成功
-                    case "005" -> out.writeUTF(searchTransferRecords(data).toString()); //查询卡的转账记录 - 返回List<Record>
-                    case "006" -> out.writeBoolean(register(data)); //注册新卡 - 返回注册是否成功
-                    case "007" -> out.writeBoolean(updatePassword(data)); //更改密码 - 返回更改是否成功
-                    case "008" -> out.writeBoolean(deleteCard(data)); //销毁卡 - 返回销毁是否成功
-                    case "009" -> out.writeUTF(getCardList().toString()); //查询所有卡的信息 - 返回所有卡的信息
-                    case "010" -> out.writeBoolean(updateBank(data)); //更新卡的所属银行 - 返回是否更新成功
-                    case "011" -> out.writeBoolean(updateStatus(data)); //更新卡的状态 - 返回是否更新成功
+                    case "000" : end = true;   //客户端登出
+                        break;
+                    case "001" : out.writeBoolean(checkLogin(data)); //用户登录 - 返回登陆是否成功
+                        break;
+                    case "002" : out.writeBoolean(checkLoginAdmin(data)); //管理员登录 - 返回登陆是否成功
+                        break;
+                    case "003" : out.writeUTF(searchDetailedInfo(data)); //用户查询详细信息 - 返回card的详细信息.
+                        break;
+                    case "004" : out.writeBoolean(transfer(data)); //转账/存款/取款 - 返回是否转账成功
+                        break;
+                    case "005" : out.writeUTF(searchTransferRecords(data).toString()); //查询卡的转账记录 - 返回List<Record>
+                        break;
+                    case "006" : out.writeBoolean(register(data)); //注册新卡 - 返回注册是否成功
+                        break;
+                    case "007" : out.writeBoolean(updatePassword(data)); //更改密码 - 返回更改是否成功
+                        break;
+                    case "008" : out.writeBoolean(deleteCard(data)); //销毁卡 - 返回销毁是否成功
+                        break;
+                    case "009" : out.writeUTF(getCardList().toString()); //查询所有卡的信息 - 返回所有卡的信息
+                        break;
+                    case "010" : out.writeBoolean(updateBank(data)); //更新卡的所属银行 - 返回是否更新成功
+                        break;
+                    case "011" : out.writeBoolean(updateStatus(data)); //更新卡的状态 - 返回是否更新成功
+                        break;
 
                     //TODO: 追加其他功能?
 
-                    default -> System.out.println("未知操作码");
+                    default : System.out.println("未知操作码");
+                        break;
                 }
             }
         } catch (SocketException ex) {
@@ -290,6 +303,9 @@ public class Server implements ServerResponse {
     @Override
     public boolean updateBank(String data) {
         Card card = ToEntity.toCard(data);
+        int id=card.getId();
+        if(!cardMapper.idCheck(id))
+            return false;
         return cardMapper.setBank(card.getId(), card.getBank());
     }
 
@@ -304,7 +320,11 @@ public class Server implements ServerResponse {
     @Override
     public boolean updateStatus(String data) {
         Card card = ToEntity.toCard(data);
-        return cardMapper.setStatus(card.getId(), card.getStatus());
+        int id=card.getId();
+        int status = 0;
+        if(!cardMapper.idCheck(id))
+            return false;
+        return cardMapper.setStatus(card.getId(), status);
     }
 
 

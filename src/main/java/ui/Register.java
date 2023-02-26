@@ -3,6 +3,7 @@ package ui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class Register extends JDialog {
     private JPanel contentPane;
@@ -41,15 +42,16 @@ public class Register extends JDialog {
         t6 = textField6.getPassword();
         id = Integer.parseInt(t1);
         userInform = t2;
-        uid = Integer.parseInt(t3);
+        uid = Long.parseLong(t3);
         bank = t4;
         if(t1.isEmpty()||t2.isEmpty()||t3.isEmpty()||t4.isEmpty()||t5.length==0||t6.length==0){
             JOptionPane.showMessageDialog(null, "输入不能为空！");
         }
         else{
-            if(!t5.equals(t6))
+            if(!Arrays.equals(t5,t6))
                 JOptionPane.showMessageDialog(null, "两次输入密码不一致！");
             else{
+                password = String.valueOf(t5);
                 dispose();
             }
         }
