@@ -21,28 +21,27 @@ public class TransferMoney extends JDialog{
         getRootPane().setDefaultButton(button_OK);
         textField1.setHorizontalAlignment(JTextField.CENTER);//文本出现在文本框中央
         textField2.setHorizontalAlignment(JTextField.CENTER);//文本出现在文本框中央
-        button_OK.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OnOK();
-            }
-        });
+        button_OK.addActionListener(e -> OnOK());
     }
     void OnOK(){
-        String STR_toid = textField1.getText();
-        String STR_tomoney = textField2.getText();
-        Matcher M_ID = Pattern.compile("\\d*").matcher(STR_toid);
-        Matcher M_MONEY = Pattern.compile("^[1-9]\\d*$").matcher(STR_tomoney);
-        if(M_ID.find()&&M_MONEY.find()){
-            toid = Integer.parseInt(STR_toid);
-            toMoney = Integer.parseInt(STR_tomoney);
-            JOptionPane.showMessageDialog(null, "输入成功！");
-            this.setVisible(false);//输入成功后暂时不释放资源：不可见
+        try {
+            String STR_toid = textField1.getText();
+            String STR_tomoney = textField2.getText();
+            Matcher M_ID = Pattern.compile("\\d*").matcher(STR_toid);
+            Matcher M_MONEY = Pattern.compile("^[1-9]\\d*$").matcher(STR_tomoney);
+            if (M_ID.find() && M_MONEY.find()) {
+                toid = Integer.parseInt(STR_toid);
+                toMoney = Integer.parseInt(STR_tomoney);
+                JOptionPane.showMessageDialog(null, "输入成功！");
+                this.setVisible(false);//输入成功后暂时不释放资源：不可见
+            } else
+                JOptionPane.showMessageDialog(null, "输入失败！");
+            //this.dispatchEvent(new WindowEvent(this,WindowEvent.WINDOW_CLOSING) );
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "不能输入字符串! ");
         }
-        else
-            JOptionPane.showMessageDialog(null, "输入失败！");
-        //this.dispatchEvent(new WindowEvent(this,WindowEvent.WINDOW_CLOSING) );
     }
+
     Integer ReturnToid(){return toid;}
     Integer Returntomoney(){return toMoney;}
     /*

@@ -1,7 +1,5 @@
 package entity;
 
-import java.time.LocalDateTime;
-
 /**
  * 实体类: 交易记录
  * 如果需要把String类型的record还原成Record类对象 请使用utils.ToEntity.toRecord()

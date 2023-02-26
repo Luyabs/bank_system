@@ -1,8 +1,6 @@
 package ui;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 public class Register extends JDialog {
@@ -24,38 +22,38 @@ public class Register extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
     }
 
     private void onOK() {
-        String t1,t2,t3,t4;
-        char []t5,t6;
-        t1 = textField1.getText();
-        t2 = textField2.getText();
-        t3 = textField3.getText();
-        t4 = textField4.getText();
-        t5 = textField5.getPassword();
-        t6 = textField6.getPassword();
-        id = Integer.parseInt(t1);
-        userInform = t2;
-        uid = Long.parseLong(t3);
-        bank = t4;
-        if(t1.isEmpty()||t2.isEmpty()||t3.isEmpty()||t4.isEmpty()||t5.length==0||t6.length==0){
-            JOptionPane.showMessageDialog(null, "输入不能为空！");
-        }
-        else{
-            if(!Arrays.equals(t5,t6))
-                JOptionPane.showMessageDialog(null, "两次输入密码不一致！");
-            else{
-                password = String.valueOf(t5);
-                dispose();
+        try {
+            String t1, t2, t3, t4;
+            char[] t5, t6;
+            t1 = textField1.getText();
+            t2 = textField2.getText();
+            t3 = textField3.getText();
+            t4 = textField4.getText();
+            t5 = textField5.getPassword();
+            t6 = textField6.getPassword();
+            id = Integer.parseInt(t1);
+            userInform = t2;
+            uid = Long.parseLong(t3);
+            bank = t4;
+            if (t1.isEmpty() || t2.isEmpty() || t3.isEmpty() || t4.isEmpty() || t5.length == 0 || t6.length == 0) {
+                JOptionPane.showMessageDialog(null, "输入不能为空！");
+            } else {
+                if (!Arrays.equals(t5, t6))
+                    JOptionPane.showMessageDialog(null, "两次输入密码不一致！");
+                else {
+                    password = String.valueOf(t5);
+                    dispose();
+                }
             }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "输入不能为字符串！");
         }
     }
+
     public Integer returnId(){ return id; }
     public String returnPassword(){return password;}
     public String returnBank(){return bank;}
