@@ -83,7 +83,7 @@ public class Login extends JDialog {
                 dialog.setAlwaysOnTop(true);
             }
             else
-                loginResult.setText("账号或密码错误");
+                loginResult.setText("账号或密码错误 / 被冻结");
         } catch (NumberFormatException e) {
             loginResult.setText("请输入整型id");
         } catch (SocketException e) {

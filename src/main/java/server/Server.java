@@ -120,7 +120,7 @@ public class Server implements ServerResponse {
         String password = card.getPassword();
 
         Card targetCard = cardMapper.selectPasswordById(id); // 查card表
-        return targetCard != null && targetCard.getPassword().equals(password);
+        return targetCard != null && targetCard.getStatus() != 0 && targetCard.getPassword().equals(password);
     }
 
     /**

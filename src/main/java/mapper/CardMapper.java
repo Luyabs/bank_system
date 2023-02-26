@@ -187,9 +187,7 @@ public class CardMapper {
             preparedStatement2.setInt(1, id);
             preparedStatement2.setString(2, password);
             j = preparedStatement2.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
         return i > 0 && j > 0;

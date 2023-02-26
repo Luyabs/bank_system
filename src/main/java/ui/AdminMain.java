@@ -129,7 +129,7 @@ public class AdminMain extends JDialog {
             List<Card> ShowAllCard = null;
             ShowAllCard = client.getCardList();
             for(Card card :ShowAllCard){
-                if(card.getId() == clientid){
+                if(card != null && card.getId() == clientid){
                     ifCardExisted = 1;
                     break;
                 }

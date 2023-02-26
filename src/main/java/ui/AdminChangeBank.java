@@ -47,7 +47,11 @@ public class AdminChangeBank extends JDialog {
         }
 
         private void onOK() {
-            id = Integer.valueOf(textField1.getText());
+            try {
+                id = Integer.valueOf(textField1.getText());
+            } catch (NumberFormatException ex) {
+                textField1.setText("卡号必须是整型数字");
+            }
             bankName = textField2.getText();
             dispose();
         }
