@@ -23,5 +23,5 @@
 > 1. 项目示意图 ![项目结构示意图](https://user-images.githubusercontent.com/74538732/221822077-2505e284-3d6a-42eb-ad1c-738d310cb790.png)
 > 2. 实体关系图 ![E-R图](https://user-images.githubusercontent.com/74538732/221821492-ee8b88e8-882b-484a-b463-a3f2449d11f6.png)
 > 3. 用例图 ![用例图](https://user-images.githubusercontent.com/74538732/221821760-011bebdc-7233-4db5-b82a-a02eca0bfd2d.png)
-> 4. 结构图 ![结构图](https://user-images.githubusercontent.com/74538732/221821876-8ea22a8a-b414-49d4-8646-8170eeb4c076.png)
+> 4. 层次图 ![结构图](https://user-images.githubusercontent.com/74538732/221821876-8ea22a8a-b414-49d4-8646-8170eeb4c076.png)
 > 5. 类图 ![UML类图](https://user-images.githubusercontent.com/74538732/221821797-0444a27a-b269-4105-8406-44791be53ea6.png)
